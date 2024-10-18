@@ -1,0 +1,7 @@
+faster_whisper
+wave
+pyaudio
+numpy
+opencv-contrib-python
+keras
+tensorflow
