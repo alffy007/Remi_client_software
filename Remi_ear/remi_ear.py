@@ -3,8 +3,9 @@ import wave
 import pyaudio
 import numpy as np
 import os
+import requests
 
-
+url = 'http://192.168.1.8:5000/chat'
 CYAN = "\033[96m"
 RESET_COLOR = "\033[0m"
 voice = "Remi_ear/spongebib.mp3"
@@ -73,7 +74,16 @@ def user_chatbot_conversation():
             record_audio(audio_file)
             user_input = transcribe_with_whisper(audio_file)
             os.remove(audio_file)
+            data = {
+    "chat_text":user_input,
+    "mood_prompt":"Happy"
+}
+            headers = {
+                'Content-Type': 'application/json'
+            }
             print(CYAN + "You:", user_input +RESET_COLOR)
+            response = requests.post(url, json=data, headers=headers)
+            print(response.text)
 
     except KeyboardInterrupt:
         print("\nRemi: Goodbye! Have a great day!")
